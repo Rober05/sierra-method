@@ -465,4 +465,39 @@ description <https://fireforce6.github.io/mission-control/system-analysis/masses
     ref instance components:GPSProcessor : component:PhysicalPart [
         component:mass 0.2^^si:kg
     ]
+
+
+
+
+
+
+
+    // --------------------------------------------------
+    // Week 2 - Task 6: Masses on Physical Parts
+    // --------------------------------------------------
+
+    ref instance components:protectiveWindow : component:PhysicalPart [
+    component:mass 0.12^^si:kg
+    ]
+
+    ref instance components:spectralFilter : component:PhysicalPart [
+    component:mass 0.05^^si:kg
+    ]
+
+    ref instance components:focusActuator : component:PhysicalPart [
+    component:mass 0.08^^si:kg
+    ]
+
+    ref instance components:calibrationShutter : component:PhysicalPart [
+    component:mass 0.04^^si:kg
+    ]
+
+    ref instance components:opticsTempSensor : component:PhysicalPart [
+    component:mass 0.02^^si:kg
+    ]
+
+
+
+
+
 }

@@ -70,4 +70,24 @@ description <https://fireforce6.github.io/mission-control/system-analysis/connec
         component:transfers TelemetrySignal
     ]
 
+
+
+    //--------------------------------------------------
+    // Week 2 - Task 3: Connections Between Ports
+    //--------------------------------------------------
+
+    relation instance connOpticsTempToFocus : component:Connection [
+        from components:OpticsTempSensor.DataOut
+        to components:FocusActuator.ControlIn
+        component:transfers TelemetrySignal
+    ]
+
+    relation instance connShutterToFocus : component:Connection [
+        from components:CalibrationShutter.StatusOut
+        to components:FocusActuator.ControlIn
+        component:transfers CommandSignal
+    ]
+
+
+
 }

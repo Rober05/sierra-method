@@ -886,4 +886,73 @@ description <https://fireforce6.github.io/mission-control/system-analysis/compon
     instance FireSat : component:Component [
         base:description "FireSat Spacecraft"
     ]
+
+
+
+
+
+
+
+
+
+
+
+    //--------------------------------------------------
+    // Week 2 - Task 1: 5 Components
+    //--------------------------------------------------
+
+    instance protectiveWindow : component:Component [
+        base:description "Sapphire front window with Diamond-Like Carbon (DLC) coating to protect Germanium primary lens from flying ash, soot, and embers."
+        base:isContainedBy ThermalOptics
+    ]
+
+    instance spectralFilter : component:Component [
+        base:description "Specialized narrowband filter that cuts through dense smoke and isolates specific fire/flame infrared wavelengths."
+        base:isContainedBy ThermalOptics
+    ]
+
+    instance focusActuator : component:Component [
+        base:description "Motorized precision stepper drive inside the lens barrel that moves lens elements for dynamic auto-focus."
+        base:isContainedBy ThermalOptics
+    ]
+
+    instance calibrationShutter : component:Component [
+        base:description "Mechanical flag/shutter used for Non-Uniformity Correction (NUC) flat-field thermal calibration."
+        base:isContainedBy ThermalOptics
+    ]
+
+    instance opticsTempSensor : component:Component [
+        base:description "Thermal sensor monitoring the temperature of the Germanium lenses to dynamically compensate for refractive index changes."
+        base:isContainedBy ThermalOptics
+    ]
+
+
+    //--------------------------------------------------
+    // Week 2 - Task 2: Components with Direction
+    //--------------------------------------------------
+
+    instance FocusActuator.PowerIn : component:Port [
+        base:description "Electrical power input port for the focus actuator stepper drive."
+        component:direction "In"
+        component:portOf focusActuator
+    ]
+
+    instance FocusActuator.ControlIn : component:Port [
+        base:description "Control signal input port receiving auto-focus commands."
+        component:direction "In"
+        component:portOf focusActuator
+    ]
+
+    instance OpticsTempSensor.DataOut : component:Port [
+        base:description "Telemetry output port transmitting lens temperature readings."
+        component:direction "Out"
+        component:portOf opticsTempSensor
+    ]
+
+    instance CalibrationShutter.StatusOut : component:Port [
+        base:description "Status output port indicating mechanical shutter position."
+        component:direction "Out"
+        component:portOf calibrationShutter
+    ]
+
 }
