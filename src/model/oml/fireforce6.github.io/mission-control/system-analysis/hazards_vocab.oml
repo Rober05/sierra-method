@@ -1,0 +1,24 @@
+// Declare the custom vocabulary namespace for hazards
+vocabulary <https://fireforce6.github.io/mission-control/system-analysis/hazards_vocab#> as hazards_vocab {
+
+    // Import base system element definitions and component vocabulary
+    extends <https://www.modelware.io/sierra/base#> as base
+    extends <https://www.modelware.io/sierra/component#> as component
+
+    // Define Hazard as a core model entity extending the base Element concept
+    concept Hazard < base:Element
+
+    // Relationship linking a Hazard to the Component it impacts
+    relation entity Affects [
+        from Hazard
+        to component:Component
+        forward affects
+    ]
+
+    // Relationship linking a Hazard to the Component that mitigates it
+    relation entity MitigatedBy [
+        from Hazard
+        to component:Component
+        forward mitigatedBy
+    ]
+}

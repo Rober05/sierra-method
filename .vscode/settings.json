@@ -1,6 +1,6 @@
 {
   "workbench.editorAssociations": {
-    "*.md": "oml.markdown.preview.editor",
+    "*.copilotmd": "vscode.markdown.preview.editor"
   },
   "files.exclude": {
     "**/.ipynb_checkpoints/": true,

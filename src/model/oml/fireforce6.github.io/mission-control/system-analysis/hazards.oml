@@ -1,0 +1,40 @@
+// Metadata annotations for document title and summary
+@dc:title "System Hazards"
+@dc:description "Hazard identification, affected components, and safety mitigations for the FireSat system."
+
+// Declare the description graph containing hazard model instances
+description <https://fireforce6.github.io/mission-control/system-analysis/hazards#> as hazards {
+
+    // Import Dublin Core metadata, base concepts, custom hazard vocabulary, and component list
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    uses <https://www.modelware.io/sierra/base#> as base
+    uses <https://fireforce6.github.io/mission-control/system-analysis/hazards_vocab#> as hazards_vocab
+
+    extends <https://fireforce6.github.io/mission-control/system-analysis/components#> as components
+
+    // Hazard Instance Definitions
+
+    // Hazard 1: Thermal Runaway in battery cells
+    instance Hazard_ThermalRunaway : hazards_vocab:Hazard [
+        base:description "Li-Ion battery cell overheating leading to runaway cell degradation."
+        base:priority "High"
+        hazards_vocab:affects components:Battery
+        hazards_vocab:mitigatedBy components:BatteryManagementUnit
+    ]
+
+    // Hazard 2: Thermal distortion affecting payload optics
+    instance Hazard_OpticalDistortion : hazards_vocab:Hazard [
+        base:description "Thermal expansion in optics causing defocusing of thermal imaging payload."
+        base:priority "Medium"
+        hazards_vocab:affects components:ThermalOptics
+        hazards_vocab:mitigatedBy components:focusActuator
+    ]
+
+    // Hazard 3: Command link loss during operations
+    instance Hazard_CommandLoss : hazards_vocab:Hazard [
+        base:description "Loss of RF communication link preventing command execution."
+        base:priority "High"
+        hazards_vocab:affects components:CommUnit
+        hazards_vocab:mitigatedBy components:WatchdogTimer
+    ]
+}
