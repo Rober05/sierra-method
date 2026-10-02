@@ -62,12 +62,6 @@ description <https://fireforce6.github.io/mission-control/operational-analysis/r
         base:priority "Medium"
     ]
 
-
-    // --------------------------------------------------
-    // Task 4: Requirements Stated by Real Stakeholders
-    // Task 5: Trace R9 to Concern and Capability
-    // --------------------------------------------------
-
     instance R8 : stakeholder:Requirement [
         base:description "Thermal Optics Lens Protection"
         base:expression "The optical system shall protect internal Germanium lens elements against physical damage and thermal shock from flying embers."
@@ -84,10 +78,11 @@ description <https://fireforce6.github.io/mission-control/operational-analysis/r
         base:priority "Medium"
     ]
 
-
-
-
-
-
-
+    instance R10 : stakeholder:Requirement [
+        base:expression "The drone shall transmit telemetry every 100 ms"
+        stakeholder:isStatedBy stakeholders:Operator
+        base:priority "High"
+        base:category "Functional"
+        base:description "Drone Telemetry"
+    ]
 }
