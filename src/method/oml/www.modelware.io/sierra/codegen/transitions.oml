@@ -1,0 +1,71 @@
+// Description ontology for state machine transition table code generation
+description <http://www.modelware.io/sierra/codegen/transitions#> as transitions {
+
+  // Import core OML and RDFS vocabulary dependencies
+  uses <http://www.w3.org/2000/01/rdf-schema#>
+  uses <http://opencaesar.io/codegen#> as codegen
+
+  // Code generator specification executing SPARQL CONSTRUCT to build the intermediate graph
+  instance TransitionTableSpec : codegen:Spec [
+    codegen:construct """
+      PREFIX oml: <http://opencaesar.io/oml#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX state: <https://www.modelware.io/sierra/state#>
+      PREFIX codegen: <http://opencaesar.io/codegen#>
+
+      CONSTRUCT {
+        # Define output target file node and template binding
+        ?file a codegen:File ;
+          codegen:path ?filePath ;
+          codegen:template <http://www.modelware.io/sierra/codegen/transitions#MissionControlTransitionsTemplate> ;
+          codegen:root ?machine .
+
+        # Map state machine root node and transitions
+        ?machine a state:StateMachine ;
+                 state:hasTransition ?t .
+
+        # Map transition triples: source state, target state, and triggering event
+        ?t a state:Transition ;
+           oml:hasSource ?source ;
+           oml:hasTarget ?target ;
+           state:isTriggeredBy ?event .
+
+        ?source a state:State .
+        ?target a state:State .
+      }
+      WHERE {
+        # Locate state machine and transition instances in graph context
+        ?machine a state:StateMachine .
+        ?t a state:Transition .
+
+        # Union pattern matching to support vocabulary namespace variants
+        { ?t oml:hasSource ?source } UNION { ?t state:hasSource ?source }
+        { ?t oml:hasTarget ?target } UNION { ?t state:hasTarget ?target }
+
+        # Optional match for event trigger to prevent dropping un-triggered transitions
+        OPTIONAL {
+          { ?t state:isTriggeredBy ?event } UNION { ?t oml:isTriggeredBy ?event }
+        }
+
+        # Parameterized output path evaluation and file URI binding
+        BIND(COALESCE(?path, "build/docs") AS ?dirPath)
+        BIND(CONCAT(?dirPath, "/", REPLACE(STR(?machine), "^.*[#//]", ""), "-transitions.md") AS ?filePath)
+        BIND(IRI(CONCAT(STR(?machine), "_file")) AS ?file)
+      }
+    """
+    codegen:parameter "path"
+  ]
+
+  // Nunjucks template that renders the SPARQL CONSTRUCT graph into Markdown table format
+  instance MissionControlTransitionsTemplate : codegen:Template [
+    codegen:body """
+# Transition Table for {{ root.localName or root.name }}
+
+| Source state | Event | Target state |
+| :--- | :--- | :--- |
+{% for t in root.hasTransition -%}
+| {{ t.hasSource.localName or t.hasSource.name }} | {{ t.isTriggeredBy.localName or t.isTriggeredBy.name if t.isTriggeredBy else "(unspecified)" }} | {{ t.hasTarget.localName or t.hasTarget.name }} |
+{% endfor %}
+    """
+  ]
+}

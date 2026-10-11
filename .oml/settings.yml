@@ -2,12 +2,12 @@
 oml-code:
   schemaVersion: 1
 
-# project npm settings
+# Project settings for Sierra Method
 project:
-  name: "@oml/fireforce6"
-  version: 0.1.0
-  title: Fire Force VI
-  description: The Fire Force VI architecture
+  name: "@modelware/sierra-method"
+  version: 0.2.0
+  title: Sierra Modeling Method
+  description: The Sierra modeling method
 
 # source folders
 sources:
@@ -16,6 +16,13 @@ sources:
 # oml server settings
 #server:
 #  port: 8080
+
+# Only include reusable method assets in src/method (excluding Fire Force src/model)
+pack:
+  include:
+    - src/method
+  exclude:
+    - "**/*.test.oml"
 
 # oml-cli parameter defaults
 defaults:

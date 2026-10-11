@@ -1,26 +1,43 @@
+// Configuration ontology binding codegen specifications to model contexts
 description <https://fireforce6.github.io/mission-control/codegen/configs#> as configs {
 
-	uses <http://opencaesar.io/codegen#> as codegen
+    // Import codegen vocabulary
+    uses <http://opencaesar.io/codegen#> as codegen
     
-	extends <https://www.modelware.io/sierra/codegen/conops#> as conops
-	extends <https://www.modelware.io/sierra/codegen/statemachine#> as statemachine
+    // Extend generator specs from methodology package
+    extends <https://www.modelware.io/sierra/codegen/conops#> as conops
+    extends <https://www.modelware.io/sierra/codegen/statemachine#> as statemachine
+    extends <http://www.modelware.io/sierra/codegen/transitions#> as transitions
 
+    // Generator config for Concept of Operations document
     instance conops : codegen:Config [
         codegen:spec conops:ConOpsSpec
         codegen:context "https://fireforce6.github.io/mission-control/bundle"
         codegen:binding [codegen:key "path" codegen:value "build/docs"]
     ]
     
+    // Generator config for MissionControlDashboard State Machine (JavaScript output)
     instance sm1 : codegen:Config [
         codegen:spec statemachine:StateMachineSpec
         codegen:context "https://fireforce6.github.io/mission-control/operational-analysis/statemachines/sm1"
         codegen:binding [codegen:key "path" codegen:value "build/docs"]
     ]
 
+    // Generator config for AIFireWarden State Machine (JavaScript output)
     instance sm2 : codegen:Config [
         codegen:spec statemachine:StateMachineSpec
         codegen:context "https://fireforce6.github.io/mission-control/operational-analysis/statemachines/sm2"
         codegen:binding [codegen:key "path" codegen:value "build/docs"]
+    ]
+
+    // Generator config binding TransitionTableSpec to sm1 state machine context
+    instance dashboardTransitions : codegen:Config [
+        codegen:spec transitions:TransitionTableSpec
+        codegen:context "https://fireforce6.github.io/mission-control/operational-analysis/statemachines/sm1"
+        codegen:binding [
+            codegen:key "path"
+            codegen:value "build/docs"
+        ]
     ]
 
 }
